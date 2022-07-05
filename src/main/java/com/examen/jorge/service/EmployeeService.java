@@ -21,16 +21,22 @@ public class EmployeeService implements  IEmployeeService{
 
     @Override
     public Optional<Employee> listarId(int id) {
-        return Optional.empty();
+        return data.findById(id);
     }
 
     @Override
     public int save(Employee e) {
-        return 0;
+        int res=0;
+        Employee employee=data.save(e);
+        if (!employee.equals(null)){
+            res=1;
+        }
+        return res;
     }
 
     @Override
     public void delete(int id) {
+        data.deleteById(id);
 
     }
 }
