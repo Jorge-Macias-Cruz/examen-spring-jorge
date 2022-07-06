@@ -15,7 +15,7 @@ public class Employee {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "languages_like",
+            name = "sabelanguages",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "language_id"))
     private List<Language> sabeLanguages;
