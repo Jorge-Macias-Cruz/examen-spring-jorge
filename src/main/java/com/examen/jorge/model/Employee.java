@@ -1,32 +1,34 @@
 package com.examen.jorge.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employees")
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String surname;
     private String firstname;
 
-    public Employee(){
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "languages_like",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "language_id"))
+    private List<Language> sabeLanguages;
 
-    }
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "country_id")
+    private Country country;
 
-    public Employee(int id, String surname, String firstname) {
-        this.id = id;
-        this.surname = surname;
-        this.firstname = firstname;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -44,5 +46,27 @@ public class Employee {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public List<Language> getLikedLanguages() {
+        return sabeLanguages;
+    }
+
+    public void setLikedLanguages(List<Language> likedLanguages) {
+        this.sabeLanguages = likedLanguages;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+    @Override
+    public String toString() {
+        return "Employee{" + "id=" + id + ", surname='" + surname + '\'' +
+                ", firstname='" + firstname + '\'' + ", likedLanguages=" + sabeLanguages +
+                ", country=" + country + '}';
     }
 }
